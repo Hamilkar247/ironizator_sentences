@@ -16,19 +16,37 @@ def def_params():
     return args        
 
 
-def main():
-    args=def_params()
+def concatenate_list_data(list):
+    result= ''
+    for element in list: 
+        result += str(element)
+    return result
+
+
+def ironizator_sentences_def(sentence):
     logging.debug('Only shown in debug mode')
-    logging.debug("input sentence:"+ args.sentence)
-    sentence_for_irony=args.sentence
+    logging.debug("input sentence:"+ sentence)
     i=0
-    for char in sentence_for_irony:
+    output_sentence=[]
+    for char in sentence:
         if i==0:
             logging.debug(char.upper())
             i=i+1
+            output_sentence.append(char.upper())
         else:
-            logging.debug(char)
+            logging.debug(char.lower())
             i=i-1
+            output_sentence.append(char.lower())
+    return concatenate_list_data(output_sentence)
+
+
+def main():
+    args=def_params()
+    logging.debug('Only shown in debug mode')
+    sentence=args.sentence
+    sentence=ironizator_sentences_def(sentence)
+    logging.debug("output sentence:"+ sentence)
+    print(sentence)
 
 
 if __name__ == "__main__":

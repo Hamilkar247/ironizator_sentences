@@ -12,23 +12,33 @@ def def_params():
     parser.add_argument("-l", "--loghami", action='store_true', help="set debug")
     parser.add_argument("-s", "--sentence", help="sentence to ironizing", required=True)
     parser.add_argument("-p", "--pyperclip", action='store_true', help="output will be saved in clipboard")
+    parser.add_argument("-u", "--underscores", action='store_true', help="change space to underscores for symbol link")
     args = parser.parse_args()
     if args.loghami: 
         logging.basicConfig(level=logging.DEBUG)
+        print("args:" + str(args))
+    if args.underscores:
+        logging.debug('dziendobry wlaczony underscores')
+        logging.debug('args.underscores:'+str(args.underscores))
     return args        
 
 
-def concatenate_list_data(list):
+def concatenate_list_data(list, underscores):
     result= ''
     for element in list: 
-        result += str(element)
+        if element=='_' and underscores==True:
+            result += " "
+            logging.debug("Hej jestem tutaj! underscors!")
+        else:
+            result += str(element)
     return result
 
 
-def ironizator_sentences_def(sentence):
+def ironizator_sentences_def(sentence, underscores):
     logging.debug('Only shown in debug mode')
     logging.debug("input sentence:"+ sentence)
-    i=0
+
+    i=1
     output_sentence=[]
     for char in sentence:
         if i==0:
@@ -39,14 +49,15 @@ def ironizator_sentences_def(sentence):
             logging.debug(char.lower())
             i=i-1
             output_sentence.append(char.lower())
-    return concatenate_list_data(output_sentence)
+    return concatenate_list_data(output_sentence, underscores)
 
 
 def main():
     args=def_params()
     logging.debug('Only shown in debug mode')
+    logging.debug("under:" + str(args.underscores))
     sentence=args.sentence
-    sentence=ironizator_sentences_def(sentence)
+    sentence=ironizator_sentences_def(sentence, args.underscores)
     logging.debug("output sentence:"+ sentence)
     if args.pyperclip:
         pc.copy(sentence)

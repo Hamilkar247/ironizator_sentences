@@ -4,6 +4,7 @@ import argparse
 import sys
 import pyperclip as pc
 
+
 def def_params():
     parser = argparse.ArgumentParser(
             description='Script to Ironizing sentence'
@@ -14,18 +15,18 @@ def def_params():
     parser.add_argument("-p", "--pyperclip", action='store_true', help="output will be saved in clipboard")
     parser.add_argument("-u", "--underscores", action='store_true', help="change space to underscores for symbol link")
     args = parser.parse_args()
-    if args.loghami: 
+    if args.loghami:
         logging.basicConfig(level=logging.DEBUG)
         print("args:" + str(args))
     if args.underscores:
         logging.debug('dziendobry wlaczony underscores')
         logging.debug('args.underscores:'+str(args.underscores))
-    return args        
+    return args
 
 
 def concatenate_list_data(list, underscores):
     result= ''
-    for element in list: 
+    for element in list:
         if element=='_' and underscores==True:
             result += " "
             logging.debug("Hej jestem tutaj! underscors!")
